@@ -1,0 +1,7 @@
+parameters:
+#    my_com_admin.example.class: MyCom\AdminBundle\Example
+
+services:
+#    my_com_admin.example:
+#        class: %my_com_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
