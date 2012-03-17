@@ -1,7 +1,0 @@
-parameters:
-#    common_base.example.class: Common\BaseBundle\Example
-
-services:
-#    common_base.example:
-#        class: %common_base.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
