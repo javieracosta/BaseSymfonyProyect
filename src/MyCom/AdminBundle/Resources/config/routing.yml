@@ -1,3 +1,13 @@
 MyComAdminBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /admin
     defaults: { _controller: MyComAdminBundle:Default:index }
+    
+item1:
+    pattern:  /item1/
+    defaults: { _controller: MyComAdminBundle:Default:index }
+    
+item2:
+
+    pattern:  /item2/{name}
+    defaults: { _controller: MyComAdminBundle:Default:index }
+    

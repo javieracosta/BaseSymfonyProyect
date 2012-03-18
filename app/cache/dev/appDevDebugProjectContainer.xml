@@ -19,6 +19,7 @@
       <parameter key="JMSSecurityExtraBundle">JMS\SecurityExtraBundle\JMSSecurityExtraBundle</parameter>
       <parameter key="MyComAdminBundle">MyCom\AdminBundle\MyComAdminBundle</parameter>
       <parameter key="FOSUserBundle">FOS\UserBundle\FOSUserBundle</parameter>
+      <parameter key="KnpMenuBundle">Knp\Bundle\MenuBundle\KnpMenuBundle</parameter>
       <parameter key="AcmeDemoBundle">Acme\DemoBundle\AcmeDemoBundle</parameter>
       <parameter key="WebProfilerBundle">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</parameter>
       <parameter key="SensioDistributionBundle">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</parameter>
@@ -147,6 +148,7 @@
     <parameter key="templating.loader.cache.path">null</parameter>
     <parameter key="templating.engines" type="collection">
       <parameter>twig</parameter>
+      <parameter>php</parameter>
     </parameter>
     <parameter key="annotations.reader.class">Doctrine\Common\Annotations\AnnotationReader</parameter>
     <parameter key="annotations.cached_reader.class">Doctrine\Common\Annotations\CachedReader</parameter>
@@ -337,7 +339,7 @@
     <parameter key="assetic.enable_profiler">false</parameter>
     <parameter key="assetic.read_from">C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/../web</parameter>
     <parameter key="assetic.write_to">C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/../web</parameter>
-    <parameter key="assetic.java.bin">c:\windows\system32\java.EXE</parameter>
+    <parameter key="assetic.java.bin">C:\windows\system32\java.EXE</parameter>
     <parameter key="assetic.node.bin">/usr/bin/node</parameter>
     <parameter key="assetic.sass.bin">/usr/bin/sass</parameter>
     <parameter key="assetic.filter.cssrewrite.class">Assetic\Filter\CssRewriteFilter</parameter>
@@ -408,6 +410,18 @@
       <parameter>ResetPassword</parameter>
       <parameter>Default</parameter>
     </parameter>
+    <parameter key="knp_menu.factory.class">Knp\Menu\Silex\RouterAwareFactory</parameter>
+    <parameter key="knp_menu.helper.class">Knp\Menu\Twig\Helper</parameter>
+    <parameter key="knp_menu.menu_provider.chain.class">Knp\Menu\Provider\ChainProvider</parameter>
+    <parameter key="knp_menu.menu_provider.container_aware.class">Knp\Bundle\MenuBundle\Provider\ContainerAwareProvider</parameter>
+    <parameter key="knp_menu.menu_provider.builder_alias.class">Knp\Bundle\MenuBundle\Provider\BuilderAliasProvider</parameter>
+    <parameter key="knp_menu.renderer_provider.class">Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider</parameter>
+    <parameter key="knp_menu.renderer.list.class">Knp\Menu\Renderer\ListRenderer</parameter>
+    <parameter key="knp_menu.twig.extension.class">Knp\Menu\Twig\MenuExtension</parameter>
+    <parameter key="knp_menu.renderer.twig.class">Knp\Menu\Renderer\TwigRenderer</parameter>
+    <parameter key="knp_menu.renderer.twig.template">knp_menu.html.twig</parameter>
+    <parameter key="knp_menu.templating.helper.class">Knp\Bundle\MenuBundle\Templating\Helper\MenuHelper</parameter>
+    <parameter key="knp_menu.default_renderer">twig</parameter>
     <parameter key="web_profiler.debug_toolbar.class">Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener</parameter>
     <parameter key="web_profiler.debug_toolbar.intercept_redirects">false</parameter>
     <parameter key="web_profiler.debug_toolbar.mode">2</parameter>
@@ -1530,6 +1544,31 @@
       <argument type="service" id="file_locator"/>
       <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/cache/dev</argument>
     </service>
+    <service id="templating.engine.php" class="Symfony\Bundle\FrameworkBundle\Templating\PhpEngine" public="false">
+      <argument type="service" id="templating.name_parser"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="templating.loader"/>
+      <argument type="service" id="templating.globals"/>
+      <call method="setCharset">
+        <argument>UTF-8</argument>
+      </call>
+      <call method="setHelpers">
+        <argument type="collection">
+          <argument key="slots">templating.helper.slots</argument>
+          <argument key="assets">templating.helper.assets</argument>
+          <argument key="request">templating.helper.request</argument>
+          <argument key="session">templating.helper.session</argument>
+          <argument key="router">templating.helper.router</argument>
+          <argument key="actions">templating.helper.actions</argument>
+          <argument key="code">templating.helper.code</argument>
+          <argument key="translator">templating.helper.translator</argument>
+          <argument key="form">templating.helper.form</argument>
+          <argument key="security">templating.helper.security</argument>
+          <argument key="assetic">assetic.helper.dynamic</argument>
+          <argument key="knp_menu">knp_menu.templating.helper</argument>
+        </argument>
+      </call>
+    </service>
     <service id="templating.helper.slots" class="Symfony\Component\Templating\Helper\SlotsHelper">
       <tag name="templating.helper" alias="slots"/>
     </service>
@@ -1575,32 +1614,7 @@
     </service>
     <service id="templating.helper.form" class="Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper">
       <tag name="templating.helper" alias="form"/>
-      <argument type="service">
-        <service class="Symfony\Bundle\FrameworkBundle\Templating\PhpEngine" public="false">
-          <argument type="service" id="templating.name_parser"/>
-          <argument type="service" id="service_container"/>
-          <argument type="service" id="templating.loader"/>
-          <argument type="service" id="templating.globals"/>
-          <call method="setCharset">
-            <argument>UTF-8</argument>
-          </call>
-          <call method="setHelpers">
-            <argument type="collection">
-              <argument key="slots">templating.helper.slots</argument>
-              <argument key="assets">templating.helper.assets</argument>
-              <argument key="request">templating.helper.request</argument>
-              <argument key="session">templating.helper.session</argument>
-              <argument key="router">templating.helper.router</argument>
-              <argument key="actions">templating.helper.actions</argument>
-              <argument key="code">templating.helper.code</argument>
-              <argument key="translator">templating.helper.translator</argument>
-              <argument key="form">templating.helper.form</argument>
-              <argument key="security">templating.helper.security</argument>
-              <argument key="assetic">assetic.helper.dynamic</argument>
-            </argument>
-          </call>
-        </service>
-      </argument>
+      <argument type="service" id="templating.engine.php"/>
       <argument type="collection">
         <argument>FrameworkBundle:Form</argument>
       </argument>
@@ -1626,7 +1640,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>4f65f3bede0cc</argument>
+            <argument>4f66319db44ea</argument>
           </service>
         </argument>
       </argument>
@@ -1818,7 +1832,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>4f65f3bede0cc</argument>
+            <argument>4f66319db44ea</argument>
             <argument type="service" id="monolog.logger.security"/>
           </service>
         </argument>
@@ -1993,6 +2007,14 @@
         </argument>
       </call>
       <call method="addExtension">
+        <argument type="service">
+          <service class="Knp\Menu\Twig\MenuExtension" public="false">
+            <tag name="twig.extension"/>
+            <argument type="service" id="knp_menu.helper"/>
+          </service>
+        </argument>
+      </call>
+      <call method="addExtension">
         <argument type="service" id="twig.extension.acme.demo"/>
       </call>
     </service>
@@ -2002,6 +2024,14 @@
       <call method="addPath">
         <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\TwigBundle\DependencyInjection/../../../Bridge/Twig/Resources/views/Form</argument>
       </call>
+      <call method="addPath">
+        <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\KnpMenu\src\Knp\Menu/Resources/views</argument>
+      </call>
+    </service>
+    <service id="templating.engine.twig" class="Symfony\Bundle\TwigBundle\TwigEngine" public="false">
+      <argument type="service" id="twig"/>
+      <argument type="service" id="templating.name_parser"/>
+      <argument type="service" id="templating.globals"/>
     </service>
     <service id="twig.exception_listener" class="Symfony\Component\HttpKernel\EventListener\ExceptionListener">
       <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" priority="-128"/>
@@ -2213,6 +2243,24 @@
             <argument>true</argument>
           </service>
         </argument>
+        <argument key="php" type="service">
+          <service class="Assetic\Factory\Loader\CachedFormulaLoader" public="false">
+            <tag name="assetic.formula_loader" alias="php"/>
+            <tag name="assetic.templating.php"/>
+            <argument type="service">
+              <service class="Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader" public="false">
+                <tag name="assetic.templating.php"/>
+                <argument type="service" id="assetic.asset_factory"/>
+              </service>
+            </argument>
+            <argument type="service">
+              <service class="Assetic\Cache\ConfigCache" public="false">
+                <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/cache/dev/assetic/config</argument>
+              </service>
+            </argument>
+            <argument>true</argument>
+          </service>
+        </argument>
       </argument>
       <call method="addResource">
         <argument type="service">
@@ -2244,6 +2292,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/FrameworkBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FrameworkBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\FrameworkBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2267,6 +2342,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/SecurityBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SecurityBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\SecurityBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2298,6 +2400,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/TwigBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>TwigBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\TwigBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2321,6 +2450,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/MonologBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MonologBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\MonologBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2352,6 +2508,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/SwiftmailerBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SwiftmailerBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\SwiftmailerBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2375,6 +2558,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/DoctrineBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>DoctrineBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\DoctrineBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2406,6 +2616,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/AsseticBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AsseticBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Symfony\Bundle\AsseticBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2429,6 +2666,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/SensioFrameworkExtraBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioFrameworkExtraBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Sensio\Bundle\FrameworkExtraBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2460,6 +2724,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>JMSSecurityExtraBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/JMSSecurityExtraBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>JMSSecurityExtraBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\JMS\SecurityExtraBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2483,6 +2774,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MyComAdminBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/MyComAdminBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>MyComAdminBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\src\MyCom\AdminBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2514,6 +2832,87 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FOSUserBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/FOSUserBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>FOSUserBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\FOS\UserBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.twig"/>
+            <tag name="assetic.formula_resource" loader="twig"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/KnpMenuBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Knp\Bundle\MenuBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.twig$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/KnpMenuBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>KnpMenuBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Knp\Bundle\MenuBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2537,6 +2936,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AcmeDemoBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/AcmeDemoBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>AcmeDemoBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\src\Acme\DemoBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2568,6 +2994,33 @@
       <call method="addResource">
         <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/WebProfilerBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>WebProfilerBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\WebProfilerBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
             <argument type="collection">
@@ -2591,6 +3044,33 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/SensioDistributionBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioDistributionBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Sensio\Bundle\DistributionBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
       <call method="addResource">
         <argument type="service">
@@ -2621,6 +3101,33 @@
       </call>
       <call method="addResource">
         <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="collection">
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/SensioGeneratorBundle/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+              <argument type="service">
+                <service class="%assetic.directory_resource.class%" public="false">
+                  <argument type="service" id="templating.loader"/>
+                  <argument>SensioGeneratorBundle</argument>
+                  <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\bundles\Sensio\Bundle\GeneratorBundle/Resources/views</argument>
+                  <argument>/^[^.]+\.[^.]+\.php$/</argument>
+                </service>
+              </argument>
+            </argument>
+          </service>
+        </argument>
+        <argument>php</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
           <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">
             <tag name="assetic.templating.twig"/>
             <tag name="assetic.formula_resource" loader="twig"/>
@@ -2631,6 +3138,19 @@
           </service>
         </argument>
         <argument>twig</argument>
+      </call>
+      <call method="addResource">
+        <argument type="service">
+          <service class="Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource" public="false">
+            <tag name="assetic.templating.php"/>
+            <tag name="assetic.formula_resource" loader="php"/>
+            <argument type="service" id="templating.loader"/>
+            <argument></argument>
+            <argument>C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/Resources/views</argument>
+            <argument>/^[^.]+\.[^.]+\.php$/</argument>
+          </service>
+        </argument>
+        <argument>php</argument>
       </call>
     </service>
     <service id="assetic.asset_factory" class="Symfony\Bundle\AsseticBundle\Factory\AssetFactory" public="false">
@@ -2652,6 +3172,12 @@
           </service>
         </argument>
       </call>
+    </service>
+    <service id="assetic.helper.dynamic" class="Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper">
+      <tag name="assetic.templating.php"/>
+      <tag name="templating.helper" alias="assetic"/>
+      <argument type="service" id="templating.helper.router"/>
+      <argument type="service" id="assetic.asset_factory"/>
     </service>
     <service id="assetic.filter.cssrewrite" class="Assetic\Filter\CssRewriteFilter">
       <tag name="assetic.filter" alias="cssrewrite"/>
@@ -2805,6 +3331,35 @@
     <service id="fos_user.resetting.form.type" class="FOS\UserBundle\Form\Type\ResettingFormType">
       <tag name="form.type" alias="fos_user_resetting"/>
     </service>
+    <service id="knp_menu.factory" class="Knp\Menu\Silex\RouterAwareFactory">
+      <argument type="service" id="router"/>
+    </service>
+    <service id="knp_menu.helper" class="Knp\Menu\Twig\Helper" public="false">
+      <argument type="service" id="knp_menu.renderer_provider"/>
+      <argument type="service" id="knp_menu.menu_provider"/>
+    </service>
+    <service id="knp_menu.renderer_provider" class="Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider">
+      <argument type="service" id="service_container"/>
+      <argument>twig</argument>
+      <argument type="collection">
+        <argument key="list">knp_menu.renderer.list</argument>
+        <argument key="twig">knp_menu.renderer.twig</argument>
+      </argument>
+    </service>
+    <service id="knp_menu.renderer.list" class="Knp\Menu\Renderer\ListRenderer">
+      <tag name="knp_menu.renderer" alias="list"/>
+      <argument type="collection"/>
+      <argument>UTF-8</argument>
+    </service>
+    <service id="knp_menu.renderer.twig" class="Knp\Menu\Renderer\TwigRenderer">
+      <tag name="knp_menu.renderer" alias="twig"/>
+      <argument type="service" id="twig"/>
+      <argument>knp_menu.html.twig</argument>
+    </service>
+    <service id="knp_menu.templating.helper" class="Knp\Bundle\MenuBundle\Templating\Helper\MenuHelper">
+      <tag name="templating.helper" alias="knp_menu"/>
+      <argument type="service" id="knp_menu.helper"/>
+    </service>
     <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
       <tag name="twig.extension"/>
       <argument type="service" id="twig.loader"/>
@@ -2815,7 +3370,7 @@
     </service>
     <service id="web_profiler.debug_toolbar" class="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener">
       <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" priority="-128"/>
-      <argument type="service" id="templating"/>
+      <argument type="service" id="templating.engine.twig"/>
       <argument>false</argument>
       <argument>2</argument>
     </service>
@@ -2932,10 +3487,12 @@
     <service id="templating.loader" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\FilesystemLoader">
       <argument type="service" id="templating.locator"/>
     </service>
-    <service id="templating" class="Symfony\Bundle\TwigBundle\TwigEngine">
-      <argument type="service" id="twig"/>
-      <argument type="service" id="templating.name_parser"/>
-      <argument type="service" id="templating.globals"/>
+    <service id="templating" class="Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine">
+      <argument type="service" id="service_container"/>
+      <argument type="collection">
+        <argument type="service" id="templating.engine.twig"/>
+        <argument type="service" id="templating.engine.php"/>
+      </argument>
     </service>
     <service id="annotation_reader" class="Doctrine\Common\Annotations\FileCacheReader">
       <argument type="service">
@@ -3066,6 +3623,25 @@
       <argument type="service" id="fos_user.resetting.form"/>
       <argument type="service" id="request"/>
       <argument type="service" id="fos_user.user_manager"/>
+    </service>
+    <service id="knp_menu.menu_provider" class="Knp\Menu\Provider\ChainProvider">
+      <argument type="collection">
+        <argument type="service">
+          <service class="Knp\Bundle\MenuBundle\Provider\ContainerAwareProvider" public="false">
+            <tag name="knp_menu.provider"/>
+            <argument type="service" id="service_container"/>
+            <argument type="collection"/>
+          </service>
+        </argument>
+        <argument type="service">
+          <service class="Knp\Bundle\MenuBundle\Provider\BuilderAliasProvider" public="false">
+            <tag name="knp_menu.provider"/>
+            <argument type="service" id="kernel"/>
+            <argument type="service" id="service_container"/>
+            <argument type="service" id="knp_menu.factory"/>
+          </service>
+        </argument>
+      </argument>
     </service>
     <service id="debug.event_dispatcher" alias="event_dispatcher"/>
     <service id="translator" alias="translator.default"/>

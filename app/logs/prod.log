@@ -1,2 +1,7 @@
 [2012-03-18 17:42:00] security.INFO: Populated SecurityContext with an anonymous Token [] []
 [2012-03-18 17:42:01] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /" (uncaught exception) at C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\vendor\symfony\src\Symfony\Bundle\FrameworkBundle\EventListener\RouterListener.php line 83 [] []
+[2012-03-18 19:18:59] security.DEBUG: Read SecurityContext from the session [] []
+[2012-03-18 19:18:59] security.DEBUG: Reloading user from user provider. [] []
+[2012-03-18 19:19:00] security.DEBUG: Username "javiacosta" was reloaded from user provider. [] []
+[2012-03-18 19:19:00] request.ERROR: Symfony\Component\HttpKernel\Exception\NotFoundHttpException: No route found for "GET /" (uncaught exception) at C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app\cache\prod\classes.php line 4564 [] []
+[2012-03-18 19:19:00] security.DEBUG: Write SecurityContext in the session [] []

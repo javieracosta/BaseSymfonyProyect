@@ -34,6 +34,8 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
        '_configurator_step' => true,
        '_configurator_final' => true,
        'MyComAdminBundle_homepage' => true,
+       'item1' => true,
+       'item2' => true,
        'fos_user_security_login' => true,
        'fos_user_security_check' => true,
        'fos_user_security_logout' => true,
@@ -173,7 +175,17 @@ class appdevUrlGenerator extends Symfony\Component\Routing\Generator\UrlGenerato
 
     private function getMyComAdminBundle_homepageRouteInfo()
     {
-        return array(array (  0 => 'name',), array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/hello',  ),));
+        return array(array (), array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/admin',  ),));
+    }
+
+    private function getitem1RouteInfo()
+    {
+        return array(array (), array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'text',    1 => '/item1/',  ),));
+    }
+
+    private function getitem2RouteInfo()
+    {
+        return array(array (  0 => 'name',), array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',), array (), array (  0 =>   array (    0 => 'variable',    1 => '/',    2 => '[^/]+?',    3 => 'name',  ),  1 =>   array (    0 => 'text',    1 => '/item2',  ),));
     }
 
     private function getfos_user_security_loginRouteInfo()

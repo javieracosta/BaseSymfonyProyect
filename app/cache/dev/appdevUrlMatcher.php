@@ -144,8 +144,21 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         }
 
         // MyComAdminBundle_homepage
-        if (0 === strpos($pathinfo, '/hello') && preg_match('#^/hello/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
-            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'MyComAdminBundle_homepage'));
+        if ($pathinfo === '/admin') {
+            return array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',  '_route' => 'MyComAdminBundle_homepage',);
+        }
+
+        // item1
+        if (rtrim($pathinfo, '/') === '/item1') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'item1');
+            }
+            return array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',  '_route' => 'item1',);
+        }
+
+        // item2
+        if (0 === strpos($pathinfo, '/item2') && preg_match('#^/item2/(?P<name>[^/]+?)$#xs', $pathinfo, $matches)) {
+            return array_merge($this->mergeDefaults($matches, array (  '_controller' => 'MyCom\\AdminBundle\\Controller\\DefaultController::indexAction',)), array('_route' => 'item2'));
         }
 
         // fos_user_security_login

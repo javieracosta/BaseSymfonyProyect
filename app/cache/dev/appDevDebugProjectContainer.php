@@ -68,26 +68,47 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getAssetic_AssetManagerService()
     {
-        $a = $this->get('templating.loader');
+        $a = $this->get('assetic.asset_factory');
+        $b = $this->get('templating.loader');
 
-        $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($this->get('assetic.asset_factory'), array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), new \Assetic\Cache\ConfigCache('C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/cache/dev/assetic/config'), true)));
+        $c = new \Assetic\Cache\ConfigCache('C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/cache/dev/assetic/config');
 
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FrameworkBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\FrameworkBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SecurityBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SecurityBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/TwigBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\TwigBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MonologBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\MonologBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SwiftmailerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SwiftmailerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/DoctrineBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\DoctrineBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AsseticBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Symfony\\Bundle\\AsseticBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\JMS\\SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MyComAdminBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\MyCom\\AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FOSUserBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\FOS\\UserBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\Acme\\DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioGeneratorBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\GeneratorBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
-        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($a, '', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'), 'twig');
+        $this->services['assetic.asset_manager'] = $instance = new \Assetic\Factory\LazyAssetManager($a, array('twig' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Assetic\Extension\Twig\TwigFormulaLoader($this->get('twig')), $c, true), 'php' => new \Assetic\Factory\Loader\CachedFormulaLoader(new \Symfony\Bundle\AsseticBundle\Factory\Loader\AsseticHelperFormulaLoader($a), $c, true)));
+
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FrameworkBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\FrameworkBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FrameworkBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FrameworkBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\FrameworkBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SecurityBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SecurityBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SecurityBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SecurityBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SecurityBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/TwigBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\TwigBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/TwigBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'TwigBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\TwigBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MonologBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\MonologBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MonologBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MonologBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\MonologBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SwiftmailerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SwiftmailerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SwiftmailerBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SwiftmailerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\SwiftmailerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/DoctrineBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\DoctrineBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/DoctrineBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'DoctrineBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\DoctrineBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AsseticBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Symfony\\Bundle\\AsseticBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AsseticBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AsseticBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Symfony\\Bundle\\AsseticBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioFrameworkExtraBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioFrameworkExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\FrameworkExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\JMS\\SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/JMSSecurityExtraBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'JMSSecurityExtraBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\JMS\\SecurityExtraBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MyComAdminBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\MyCom\\AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/MyComAdminBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'MyComAdminBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\MyCom\\AdminBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FOSUserBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\FOS\\UserBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/FOSUserBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'FOSUserBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\FOS\\UserBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'KnpMenuBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/KnpMenuBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'KnpMenuBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Knp\\Bundle\\MenuBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'KnpMenuBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/KnpMenuBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'KnpMenuBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Knp\\Bundle\\MenuBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\Acme\\DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/AcmeDemoBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'AcmeDemoBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\src\\Acme\\DemoBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/WebProfilerBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'WebProfilerBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\WebProfilerBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioDistributionBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioDistributionBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\DistributionBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioGeneratorBundle/views', '/^[^.]+\\.[^.]+\\.twig$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\GeneratorBundle/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'))), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\CoalescingDirectoryResource(array(0 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/SensioGeneratorBundle/views', '/^[^.]+\\.[^.]+\\.php$/'), 1 => new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, 'SensioGeneratorBundle', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\bundles\\Sensio\\Bundle\\GeneratorBundle/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'))), 'php');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, '', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/views', '/^[^.]+\\.[^.]+\\.twig$/'), 'twig');
+        $instance->addResource(new \Symfony\Bundle\AsseticBundle\Factory\Resource\DirectoryResource($b, '', 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/Resources/views', '/^[^.]+\\.[^.]+\\.php$/'), 'php');
 
         return $instance;
     }
@@ -126,6 +147,19 @@ class appDevDebugProjectContainer extends Container
     protected function getAssetic_FilterManagerService()
     {
         return $this->services['assetic.filter_manager'] = new \Symfony\Bundle\AsseticBundle\FilterManager($this, array('cssrewrite' => 'assetic.filter.cssrewrite'));
+    }
+
+    /**
+     * Gets the 'assetic.helper.dynamic' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper A Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper instance.
+     */
+    protected function getAssetic_Helper_DynamicService()
+    {
+        return $this->services['assetic.helper.dynamic'] = new \Symfony\Bundle\AsseticBundle\Templating\DynamicAsseticHelper($this->get('templating.helper.router'), $this->get('assetic.asset_factory'));
     }
 
     /**
@@ -1126,6 +1160,84 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'knp_menu.factory' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Menu\Silex\RouterAwareFactory A Knp\Menu\Silex\RouterAwareFactory instance.
+     */
+    protected function getKnpMenu_FactoryService()
+    {
+        return $this->services['knp_menu.factory'] = new \Knp\Menu\Silex\RouterAwareFactory($this->get('router'));
+    }
+
+    /**
+     * Gets the 'knp_menu.menu_provider' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Menu\Provider\ChainProvider A Knp\Menu\Provider\ChainProvider instance.
+     */
+    protected function getKnpMenu_MenuProviderService()
+    {
+        return $this->services['knp_menu.menu_provider'] = new \Knp\Menu\Provider\ChainProvider(array(0 => new \Knp\Bundle\MenuBundle\Provider\ContainerAwareProvider($this, array()), 1 => new \Knp\Bundle\MenuBundle\Provider\BuilderAliasProvider($this->get('kernel'), $this, $this->get('knp_menu.factory'))));
+    }
+
+    /**
+     * Gets the 'knp_menu.renderer.list' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Menu\Renderer\ListRenderer A Knp\Menu\Renderer\ListRenderer instance.
+     */
+    protected function getKnpMenu_Renderer_ListService()
+    {
+        return $this->services['knp_menu.renderer.list'] = new \Knp\Menu\Renderer\ListRenderer(array(), 'UTF-8');
+    }
+
+    /**
+     * Gets the 'knp_menu.renderer.twig' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Menu\Renderer\TwigRenderer A Knp\Menu\Renderer\TwigRenderer instance.
+     */
+    protected function getKnpMenu_Renderer_TwigService()
+    {
+        return $this->services['knp_menu.renderer.twig'] = new \Knp\Menu\Renderer\TwigRenderer($this->get('twig'), 'knp_menu.html.twig');
+    }
+
+    /**
+     * Gets the 'knp_menu.renderer_provider' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider A Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider instance.
+     */
+    protected function getKnpMenu_RendererProviderService()
+    {
+        return $this->services['knp_menu.renderer_provider'] = new \Knp\Bundle\MenuBundle\Renderer\ContainerAwareProvider($this, 'twig', array('list' => 'knp_menu.renderer.list', 'twig' => 'knp_menu.renderer.twig'));
+    }
+
+    /**
+     * Gets the 'knp_menu.templating.helper' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * @return Knp\Bundle\MenuBundle\Templating\Helper\MenuHelper A Knp\Bundle\MenuBundle\Templating\Helper\MenuHelper instance.
+     */
+    protected function getKnpMenu_Templating_HelperService()
+    {
+        return $this->services['knp_menu.templating.helper'] = new \Knp\Bundle\MenuBundle\Templating\Helper\MenuHelper($this->get('knp_menu.helper'));
+    }
+
+    /**
      * Gets the 'logger' service.
      *
      * This service is shared.
@@ -1557,7 +1669,7 @@ class appDevDebugProjectContainer extends Container
         $l = new \Symfony\Component\Security\Http\Firewall\LogoutListener($b, $k, '/logout', '/', NULL);
         $l->addHandler(new \Symfony\Component\Security\Http\Logout\SessionLogoutHandler());
 
-        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($j, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('fos_user.user_manager')), 'main', $a, $c), 2 => $l, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $k, 'main', array('check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), NULL, NULL, $a, $c, $this->get('form.csrf_provider')), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '4f65f3bede0cc', $a), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $j, $e, $a)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $k, new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($this->get('http_kernel'), $k, '/login', false), NULL, NULL, $a));
+        return $this->services['security.firewall.map.context.main'] = new \Symfony\Bundle\SecurityBundle\Security\FirewallContext(array(0 => new \Symfony\Component\Security\Http\Firewall\ChannelListener($j, new \Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint(), $a), 1 => new \Symfony\Component\Security\Http\Firewall\ContextListener($b, array(0 => $this->get('fos_user.user_manager')), 'main', $a, $c), 2 => $l, 3 => new \Symfony\Component\Security\Http\Firewall\UsernamePasswordFormAuthenticationListener($b, $e, new \Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy('migrate'), $k, 'main', array('check_path' => '/login_check', 'login_path' => '/login', 'use_forward' => false, 'always_use_default_target_path' => false, 'default_target_path' => '/', 'target_path_parameter' => '_target_path', 'use_referer' => false, 'failure_path' => NULL, 'failure_forward' => false, 'username_parameter' => '_username', 'password_parameter' => '_password', 'csrf_parameter' => '_csrf_token', 'intention' => 'authenticate', 'post_only' => true), NULL, NULL, $a, $c, $this->get('form.csrf_provider')), 4 => new \Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener($b, '4f66319db44ea', $a), 5 => new \Symfony\Component\Security\Http\Firewall\AccessListener($b, $this->get('security.access.decision_manager'), $j, $e, $a)), new \Symfony\Component\Security\Http\Firewall\ExceptionListener($b, $this->get('security.authentication.trust_resolver'), $k, new \Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint($this->get('http_kernel'), $k, '/login', false), NULL, NULL, $a));
     }
 
     /**
@@ -1762,11 +1874,11 @@ class appDevDebugProjectContainer extends Container
      * This service is shared.
      * This method always returns the same instance of the service.
      *
-     * @return Symfony\Bundle\TwigBundle\TwigEngine A Symfony\Bundle\TwigBundle\TwigEngine instance.
+     * @return Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine A Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine instance.
      */
     protected function getTemplatingService()
     {
-        return $this->services['templating'] = new \Symfony\Bundle\TwigBundle\TwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.globals'));
+        return $this->services['templating'] = new \Symfony\Bundle\FrameworkBundle\Templating\DelegatingEngine($this, array(0 => $this->get('templating.engine.twig'), 1 => $this->get('templating.engine.php')));
     }
 
     /**
@@ -1848,11 +1960,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getTemplating_Helper_FormService()
     {
-        $a = new \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('templating.globals'));
-        $a->setCharset('UTF-8');
-        $a->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic'));
-
-        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper($a, array(0 => 'FrameworkBundle:Form'));
+        return $this->services['templating.helper.form'] = new \Symfony\Bundle\FrameworkBundle\Templating\Helper\FormHelper($this->get('templating.engine.php'), array(0 => 'FrameworkBundle:Form'));
     }
 
     /**
@@ -2099,6 +2207,7 @@ class appDevDebugProjectContainer extends Container
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\YamlExtension());
         $instance->addExtension(new \Symfony\Bridge\Twig\Extension\FormExtension(array(0 => 'form_div_layout.html.twig')));
         $instance->addExtension(new \Symfony\Bundle\AsseticBundle\Twig\AsseticExtension($this->get('assetic.asset_factory'), true, array()));
+        $instance->addExtension(new \Knp\Menu\Twig\MenuExtension($this->get('knp_menu.helper')));
         $instance->addExtension($this->get('twig.extension.acme.demo'));
 
         return $instance;
@@ -2130,6 +2239,7 @@ class appDevDebugProjectContainer extends Container
         $this->services['twig.loader'] = $instance = new \Symfony\Bundle\TwigBundle\Loader\FilesystemLoader($this->get('templating.locator'), $this->get('templating.name_parser'));
 
         $instance->addPath('C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\symfony\\src\\Symfony\\Bundle\\TwigBundle\\DependencyInjection/../../../Bridge/Twig/Resources/views/Form');
+        $instance->addPath('C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\vendor\\KnpMenu\\src\\Knp\\Menu/Resources/views');
 
         return $instance;
     }
@@ -2157,7 +2267,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getWebProfiler_DebugToolbarService()
     {
-        return $this->services['web_profiler.debug_toolbar'] = new \Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener($this->get('templating'), false, 2);
+        return $this->services['web_profiler.debug_toolbar'] = new \Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener($this->get('templating.engine.twig'), false, 2);
     }
 
     /**
@@ -2293,6 +2403,23 @@ class appDevDebugProjectContainer extends Container
     }
 
     /**
+     * Gets the 'knp_menu.helper' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Knp\Menu\Twig\Helper A Knp\Menu\Twig\Helper instance.
+     */
+    protected function getKnpMenu_HelperService()
+    {
+        return $this->services['knp_menu.helper'] = new \Knp\Menu\Twig\Helper($this->get('knp_menu.renderer_provider'), $this->get('knp_menu.menu_provider'));
+    }
+
+    /**
      * Gets the 'security.access.decision_manager' service.
      *
      * This service is shared.
@@ -2323,7 +2450,7 @@ class appDevDebugProjectContainer extends Container
      */
     protected function getSecurity_Authentication_ManagerService()
     {
-        return $this->services['security.authentication.manager'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('fos_user.user_manager'), $this->get('fos_user.user_checker'), 'main', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('4f65f3bede0cc')));
+        return $this->services['security.authentication.manager'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager(array(0 => new \Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider($this->get('fos_user.user_manager'), $this->get('fos_user.user_checker'), 'main', $this->get('security.encoder_factory'), true), 1 => new \Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider('4f66319db44ea')));
     }
 
     /**
@@ -2341,6 +2468,45 @@ class appDevDebugProjectContainer extends Container
     protected function getSecurity_Authentication_TrustResolverService()
     {
         return $this->services['security.authentication.trust_resolver'] = new \Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver('Symfony\\Component\\Security\\Core\\Authentication\\Token\\AnonymousToken', 'Symfony\\Component\\Security\\Core\\Authentication\\Token\\RememberMeToken');
+    }
+
+    /**
+     * Gets the 'templating.engine.php' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Symfony\Bundle\FrameworkBundle\Templating\PhpEngine A Symfony\Bundle\FrameworkBundle\Templating\PhpEngine instance.
+     */
+    protected function getTemplating_Engine_PhpService()
+    {
+        $this->services['templating.engine.php'] = $instance = new \Symfony\Bundle\FrameworkBundle\Templating\PhpEngine($this->get('templating.name_parser'), $this, $this->get('templating.loader'), $this->get('templating.globals'));
+
+        $instance->setCharset('UTF-8');
+        $instance->setHelpers(array('slots' => 'templating.helper.slots', 'assets' => 'templating.helper.assets', 'request' => 'templating.helper.request', 'session' => 'templating.helper.session', 'router' => 'templating.helper.router', 'actions' => 'templating.helper.actions', 'code' => 'templating.helper.code', 'translator' => 'templating.helper.translator', 'form' => 'templating.helper.form', 'security' => 'templating.helper.security', 'assetic' => 'assetic.helper.dynamic', 'knp_menu' => 'knp_menu.templating.helper'));
+
+        return $instance;
+    }
+
+    /**
+     * Gets the 'templating.engine.twig' service.
+     *
+     * This service is shared.
+     * This method always returns the same instance of the service.
+     *
+     * This service is private.
+     * If you want to be able to request this service from the container directly,
+     * make it public, otherwise you might end up with broken code.
+     *
+     * @return Symfony\Bundle\TwigBundle\TwigEngine A Symfony\Bundle\TwigBundle\TwigEngine instance.
+     */
+    protected function getTemplating_Engine_TwigService()
+    {
+        return $this->services['templating.engine.twig'] = new \Symfony\Bundle\TwigBundle\TwigEngine($this->get('twig'), $this->get('templating.name_parser'), $this->get('templating.globals'));
     }
 
     /**
@@ -2461,6 +2627,7 @@ class appDevDebugProjectContainer extends Container
                 'JMSSecurityExtraBundle' => 'JMS\\SecurityExtraBundle\\JMSSecurityExtraBundle',
                 'MyComAdminBundle' => 'MyCom\\AdminBundle\\MyComAdminBundle',
                 'FOSUserBundle' => 'FOS\\UserBundle\\FOSUserBundle',
+                'KnpMenuBundle' => 'Knp\\Bundle\\MenuBundle\\KnpMenuBundle',
                 'AcmeDemoBundle' => 'Acme\\DemoBundle\\AcmeDemoBundle',
                 'WebProfilerBundle' => 'Symfony\\Bundle\\WebProfilerBundle\\WebProfilerBundle',
                 'SensioDistributionBundle' => 'Sensio\\Bundle\\DistributionBundle\\SensioDistributionBundle',
@@ -2593,6 +2760,7 @@ class appDevDebugProjectContainer extends Container
             'templating.loader.cache.path' => NULL,
             'templating.engines' => array(
                 0 => 'twig',
+                1 => 'php',
             ),
             'annotations.reader.class' => 'Doctrine\\Common\\Annotations\\AnnotationReader',
             'annotations.cached_reader.class' => 'Doctrine\\Common\\Annotations\\CachedReader',
@@ -2787,7 +2955,7 @@ class appDevDebugProjectContainer extends Container
             'assetic.enable_profiler' => false,
             'assetic.read_from' => 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/../web',
             'assetic.write_to' => 'C:\\Users\\Javier\\Documents\\sites\\php\\BaseSymfonyProyect\\app/../web',
-            'assetic.java.bin' => 'c:\\windows\\system32\\java.EXE',
+            'assetic.java.bin' => 'C:\\windows\\system32\\java.EXE',
             'assetic.node.bin' => '/usr/bin/node',
             'assetic.sass.bin' => '/usr/bin/sass',
             'assetic.filter.cssrewrite.class' => 'Assetic\\Filter\\CssRewriteFilter',
@@ -2862,6 +3030,18 @@ class appDevDebugProjectContainer extends Container
                 0 => 'ResetPassword',
                 1 => 'Default',
             ),
+            'knp_menu.factory.class' => 'Knp\\Menu\\Silex\\RouterAwareFactory',
+            'knp_menu.helper.class' => 'Knp\\Menu\\Twig\\Helper',
+            'knp_menu.menu_provider.chain.class' => 'Knp\\Menu\\Provider\\ChainProvider',
+            'knp_menu.menu_provider.container_aware.class' => 'Knp\\Bundle\\MenuBundle\\Provider\\ContainerAwareProvider',
+            'knp_menu.menu_provider.builder_alias.class' => 'Knp\\Bundle\\MenuBundle\\Provider\\BuilderAliasProvider',
+            'knp_menu.renderer_provider.class' => 'Knp\\Bundle\\MenuBundle\\Renderer\\ContainerAwareProvider',
+            'knp_menu.renderer.list.class' => 'Knp\\Menu\\Renderer\\ListRenderer',
+            'knp_menu.twig.extension.class' => 'Knp\\Menu\\Twig\\MenuExtension',
+            'knp_menu.renderer.twig.class' => 'Knp\\Menu\\Renderer\\TwigRenderer',
+            'knp_menu.renderer.twig.template' => 'knp_menu.html.twig',
+            'knp_menu.templating.helper.class' => 'Knp\\Bundle\\MenuBundle\\Templating\\Helper\\MenuHelper',
+            'knp_menu.default_renderer' => 'twig',
             'web_profiler.debug_toolbar.class' => 'Symfony\\Bundle\\WebProfilerBundle\\EventListener\\WebDebugToolbarListener',
             'web_profiler.debug_toolbar.intercept_redirects' => false,
             'web_profiler.debug_toolbar.mode' => 2,

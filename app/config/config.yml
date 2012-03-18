@@ -11,7 +11,7 @@ framework:
     form:            true
     csrf_protection: true
     validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    templating:      { engines: ['twig','php'] } #assets_version: SomeVersionScheme
     session:
         default_locale: %locale%
         auto_start:     true
@@ -71,5 +71,5 @@ fos_user:
 knp_menu:
     twig:  # use "twig: false" to disable the Twig extension and the TwigRenderer
         template: knp_menu.html.twig
-    templating: false # if true, enables the helper for PHP templates
+    templating: true # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
