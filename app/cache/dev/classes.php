@@ -5256,6 +5256,33 @@ class ContainerAwareEventDispatcher extends EventDispatcher
         $this->listenerIds[$eventName][] = array($callback[0], $callback[1], $priority);
     }
 
+    public function removeListener($eventName, $listener)
+    {
+        $this->lazyLoad($eventName);
+
+        if (isset($this->listeners[$eventName])) {
+            foreach ($this->listeners[$eventName] as $key => $l) {
+                foreach ($this->listenerIds[$eventName] as $i => $args) {
+                    list($serviceId, $method, $priority) = $args;
+                    if ($key === $serviceId.'.'.$method) {
+                        if ($listener === array($l, $method)) {
+                            unset($this->listeners[$eventName][$key]);
+                            if (empty($this->listeners[$eventName])) {
+                                unset($this->listeners[$eventName]);
+                            }
+                            unset($this->listenerIds[$eventName][$i]);
+                            if (empty($this->listenerIds[$eventName])) {
+                                unset($this->listenerIds[$eventName]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        parent::removeListener($eventName, $listener);
+    }
+
     
     public function hasListeners($eventName = null)
     {
@@ -5274,7 +5301,7 @@ class ContainerAwareEventDispatcher extends EventDispatcher
     public function getListeners($eventName = null)
     {
         if (null === $eventName) {
-            foreach ($this->listenerIds as $serviceEventName => $listners) {
+            foreach (array_keys($this->listenerIds) as $serviceEventName) {
                 $this->lazyLoad($serviceEventName);
             }
         } else {
@@ -5304,7 +5331,7 @@ class ContainerAwareEventDispatcher extends EventDispatcher
                 if (!isset($this->listeners[$eventName][$key])) {
                     $this->addListener($eventName, array($listener, $method), $priority);
                 } elseif ($listener !== $this->listeners[$eventName][$key]) {
-                    $this->removeListener($eventName, array($this->listeners[$eventName][$key], $method));
+                    parent::removeListener($eventName, array($this->listeners[$eventName][$key], $method));
                     $this->addListener($eventName, array($listener, $method), $priority);
                 }
 
@@ -5411,7 +5438,11 @@ class HttpKernel extends BaseHttpKernel
             }
         } else {
             $options['attributes']['_controller'] = $controller;
-            $options['attributes']['_format'] = $request->getRequestFormat();
+
+            if (!isset($options['attributes']['_format'])) {
+                $options['attributes']['_format'] = $request->getRequestFormat();
+            }
+
             $options['attributes']['_route'] = '_internal';
             $subRequest = $request->duplicate($options['query'], null, $options['attributes']);
         }
@@ -6203,7 +6234,7 @@ namespace
  */
 class Twig_Environment
 {
-    const VERSION = '1.6.0';
+    const VERSION = '1.6.2';
     protected $charset;
     protected $loader;
     protected $debug;
@@ -6811,7 +6842,7 @@ class Twig_Environment
                 foreach($parsers as $parser) {
                     if ($parser instanceof Twig_TokenParserInterface) {
                         $this->parsers->addTokenParser($parser);
-                    } else if ($parser instanceof Twig_TokenParserBrokerInterface) {
+                    } elseif ($parser instanceof Twig_TokenParserBrokerInterface) {
                         $this->parsers->addTokenParserBroker($parser);
                     } else {
                         throw new Twig_Error_Runtime('getTokenParsers() must return an array of Twig_TokenParserInterface or Twig_TokenParserBrokerInterface instances');
@@ -7107,8 +7138,13 @@ class Twig_Environment
     }
     protected function writeCacheFile($file, $content)
     {
-        if (!is_dir(dirname($file))) {
-            mkdir(dirname($file), 0777, true);
+        $dir = dirname($file);
+        if (!is_dir($dir)) {
+            if (false === @mkdir($dir, 0777, true) && !is_dir($dir)) {
+                throw new RuntimeException(sprintf("Unable to create the cache directory (%s).", $dir));
+            }
+        } elseif (!is_writable($dir)) {
+            throw new RuntimeException(sprintf("Unable to write in the cache directory (%s).", $dir));
         }
         $tmpFile = tempnam(dirname($file), basename($file));
         if (false !== @file_put_contents($tmpFile, $content)) {
@@ -7311,6 +7347,7 @@ class Twig_Extension_Core extends Twig_Extension
 {
     protected $dateFormats = array('F j, Y H:i', '%d days');
     protected $numberFormat = array(0, '.', ',');
+    protected $timezone = null;
     /**
      * Sets the default format to be used by the date filter.
      *
@@ -7334,6 +7371,24 @@ class Twig_Extension_Core extends Twig_Extension
     public function getDateFormat()
     {
         return $this->dateFormats;
+    }
+    /**
+     * Sets the default timezone to be used by the date filter.
+     *
+     * @param DateTimeZone|string $timezone  The default timezone string or a DateTimeZone object
+     */
+    public function setTimezone($timezone)
+    {
+        $this->timezone = $timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone);
+    }
+    /**
+     * Gets the default timezone to be used by the date filter.
+     *
+     * @return DateTimeZone The default timezone currently in use
+     */
+    public function getTimezone()
+    {
+        return $this->timezone;
     }
     /**
      * Sets the default format to be used by the number_format filter.
@@ -7402,6 +7457,7 @@ class Twig_Extension_Core extends Twig_Extension
             'upper'      => new Twig_Filter_Function('strtoupper'),
             'lower'      => new Twig_Filter_Function('strtolower'),
             'striptags'  => new Twig_Filter_Function('strip_tags'),
+            'trim'       => new Twig_Filter_Function('trim'),
             'nl2br'      => new Twig_Filter_Function('nl2br', array('pre_escape' => 'html', 'is_safe' => array('html'))),
             // array helpers
             'join'    => new Twig_Filter_Function('twig_join_filter'),
@@ -7437,7 +7493,7 @@ class Twig_Extension_Core extends Twig_Extension
             'constant' => new Twig_Function_Function('constant'),
             'cycle'    => new Twig_Function_Function('twig_cycle'),
             'random'   => new Twig_Function_Function('twig_random', array('needs_environment' => true)),
-            'date'     => new Twig_Function_Function('twig_date_converter'),
+            'date'     => new Twig_Function_Function('twig_date_converter', array('needs_environment' => true)),
         );
     }
     /**
@@ -7615,9 +7671,12 @@ function twig_date_format_filter(Twig_Environment $env, $date, $format = null, $
         $format = $date instanceof DateInterval ? $formats[1] : $formats[0];
     }
     if ($date instanceof DateInterval || $date instanceof DateTime) {
+        if (null !== $timezone) {
+            $date->setTimezone($timezone instanceof DateTimeZone ? $timezone : new DateTimeZone($timezone));
+        }
         return $date->format($format);
     }
-    return twig_date_converter($date, $timezone)->format($format);
+    return twig_date_converter($env, $date, $timezone)->format($format);
 }
 /**
  * Converts an input to a DateTime instance.
@@ -7628,12 +7687,13 @@ function twig_date_format_filter(Twig_Environment $env, $date, $format = null, $
  *    {% endif %}
  * </pre>
  *
+ * @param Twig_Environment    $env      A Twig_Environment instance
  * @param DateTime|string     $date     A date
  * @param DateTimeZone|string $timezone A timezone
  *
  * @return DateTime A DateTime instance
  */
-function twig_date_converter($date = null, $timezone = null)
+function twig_date_converter(Twig_Environment $env, $date = null, $timezone = null)
 {
     if ($date instanceof DateTime) {
         return $date;
@@ -7650,6 +7710,8 @@ function twig_date_converter($date = null, $timezone = null)
         if (!$timezone instanceof DateTimeZone) {
             $timezone = new DateTimeZone($timezone);
         }
+        $date->setTimezone($timezone);
+    } elseif (($timezone = $env->getExtension('core')->getTimezone()) instanceof DateTimeZone) {
         $date->setTimezone($timezone);
     }
     return $date;
@@ -7767,26 +7829,27 @@ function twig_array_merge($arr1, $arr2)
 /**
  * Slices a variable.
  *
- * @param Twig_Environment $env    A Twig_Environment instance
- * @param mixed            $item   A variable
- * @param integer          $start  Start of the slice
- * @param integer          $length Size of the slice
+ * @param Twig_Environment $env          A Twig_Environment instance
+ * @param mixed            $item         A variable
+ * @param integer          $start        Start of the slice
+ * @param integer          $length       Size of the slice
+ * @param Boolean          $preserveKeys Whether to preserve key or not (when the input is an array)
  *
  * @return mixed The sliced variable
  */
-function twig_slice(Twig_Environment $env, $item, $start, $length = null)
+function twig_slice(Twig_Environment $env, $item, $start, $length = null, $preserveKeys = false)
 {
     if ($item instanceof Traversable) {
         $item = iterator_to_array($item, false);
     }
     if (is_array($item)) {
-        return array_slice($item, $start, $length);
+        return array_slice($item, $start, $length, $preserveKeys);
     }
     $item = (string) $item;
     if (function_exists('mb_get_info') && null !== $charset = $env->getCharset()) {
-        return mb_substr($item, $start, $length, $charset);
+        return mb_substr($item, $start, null === $length ? mb_strlen($item, $charset) - $start : $length, $charset);
     }
-    return substr($item, $start, $length);
+    return null === $length ? substr($item, $start) : substr($item, $start, $length);
 }
 /**
  * Joins the values to a string.
@@ -8291,6 +8354,8 @@ interface Twig_LoaderInterface
      * @param  string $name The name of the template to load
      *
      * @return string The template source code
+     *
+     * @throws Twig_Error_Loader When $name is not found
      */
     function getSource($name);
     /**
@@ -8299,6 +8364,8 @@ interface Twig_LoaderInterface
      * @param  string $name The name of the template to load
      *
      * @return string The cache key
+     *
+     * @throws Twig_Error_Loader When $name is not found
      */
     function getCacheKey($name);
     /**
@@ -8306,6 +8373,10 @@ interface Twig_LoaderInterface
      *
      * @param string    $name The template name
      * @param timestamp $time The last modification time of the cached template
+     *
+     * @return Boolean true if the template is fresh, false otherwise
+     *
+     * @throws Twig_Error_Loader When $name is not found
      */
     function isFresh($name, $time);
 }
@@ -8488,6 +8559,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      */
     public function displayParentBlock($name, array $context, array $blocks = array())
     {
+        $name = (string) $name;
         if (isset($this->traits[$name])) {
             $this->traits[$name][0]->displayBlock($name, $context, $blocks);
         } elseif (false !== $parent = $this->getParent($context)) {
@@ -8508,6 +8580,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      */
     public function displayBlock($name, array $context, array $blocks = array())
     {
+        $name = (string) $name;
         if (isset($blocks[$name])) {
             $b = $blocks;
             unset($b[$name]);
@@ -8573,7 +8646,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      */
     public function hasBlock($name)
     {
-        return isset($this->blocks[$name]);
+        return isset($this->blocks[(string) $name]);
     }
     /**
      * Returns all block names.
@@ -8658,6 +8731,14 @@ abstract class Twig_Template implements Twig_TemplateInterface
     /**
      * Returns a variable from the context.
      *
+     * This method is for internal use only and should never be called
+     * directly.
+     *
+     * This method should not be overriden in a sub-class as this is an
+     * implementation detail that has been introduced to optimize variable
+     * access for versions of PHP before 5.4. This is not a way to override
+     * the way to get a variable value.
+     *
      * @param array   $context           The context
      * @param string  $item              The variable to return from the context
      * @param Boolean $ignoreStrictCheck Whether to ignore the strict variable check or not
@@ -8666,7 +8747,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
      *
      * @throws Twig_Error_Runtime if the variable does not exist and Twig is running in strict mode
      */
-    protected function getContext($context, $item, $ignoreStrictCheck = false)
+    final protected function getContext($context, $item, $ignoreStrictCheck = false)
     {
         if (!array_key_exists($item, $context)) {
             if ($ignoreStrictCheck || !$this->env->isStrictVariables()) {
@@ -8778,7 +8859,7 @@ abstract class Twig_Template implements Twig_TemplateInterface
         $ret = call_user_func_array(array($object, $method), $arguments);
         // hack to be removed when macro calls are refactored
         if ($object instanceof Twig_TemplateInterface) {
-            return new Twig_Markup($ret, $this->env->getCharset());
+            return $ret === '' ? '' : new Twig_Markup($ret, $this->env->getCharset());
         }
         return $ret;
     }

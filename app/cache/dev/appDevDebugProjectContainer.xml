@@ -113,8 +113,8 @@
     <parameter key="router.options.matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</parameter>
     <parameter key="router.options.matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</parameter>
     <parameter key="router.cache_warmer.class">Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer</parameter>
-    <parameter key="router.options.matcher.cache_class">app%kernel.environment%UrlMatcher</parameter>
-    <parameter key="router.options.generator.cache_class">app%kernel.environment%UrlGenerator</parameter>
+    <parameter key="router.options.matcher.cache_class">appdevUrlMatcher</parameter>
+    <parameter key="router.options.generator.cache_class">appdevUrlGenerator</parameter>
     <parameter key="router.resource">C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/config/routing_dev.yml</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
@@ -339,7 +339,7 @@
     <parameter key="assetic.enable_profiler">false</parameter>
     <parameter key="assetic.read_from">C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/../web</parameter>
     <parameter key="assetic.write_to">C:\Users\Javier\Documents\sites\php\BaseSymfonyProyect\app/../web</parameter>
-    <parameter key="assetic.java.bin">C:\windows\system32\java.EXE</parameter>
+    <parameter key="assetic.java.bin">c:\windows\system32\java.EXE</parameter>
     <parameter key="assetic.node.bin">/usr/bin/node</parameter>
     <parameter key="assetic.sass.bin">/usr/bin/sass</parameter>
     <parameter key="assetic.filter.cssrewrite.class">Assetic\Filter\CssRewriteFilter</parameter>
@@ -1640,7 +1640,7 @@
         </argument>
         <argument type="service">
           <service class="Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider" public="false">
-            <argument>4f66319db44ea</argument>
+            <argument>4f672c10e14a3</argument>
           </service>
         </argument>
       </argument>
@@ -1832,7 +1832,7 @@
         <argument type="service">
           <service class="Symfony\Component\Security\Http\Firewall\AnonymousAuthenticationListener" public="false">
             <argument type="service" id="security.context"/>
-            <argument>4f66319db44ea</argument>
+            <argument>4f672c10e14a3</argument>
             <argument type="service" id="monolog.logger.security"/>
           </service>
         </argument>
@@ -3477,11 +3477,11 @@
         <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
         <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</argument>
-        <argument key="generator_cache_class">app%kernel.environment%UrlGenerator</argument>
+        <argument key="generator_cache_class">appdevUrlGenerator</argument>
         <argument key="matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
         <argument key="matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
         <argument key="matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</argument>
-        <argument key="matcher_cache_class">app%kernel.environment%UrlMatcher</argument>
+        <argument key="matcher_cache_class">appdevUrlMatcher</argument>
       </argument>
     </service>
     <service id="templating.loader" class="Symfony\Bundle\FrameworkBundle\Templating\Loader\FilesystemLoader">
