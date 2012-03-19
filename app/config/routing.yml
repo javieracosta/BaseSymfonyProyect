@@ -1,3 +1,7 @@
+MyComPlatformBundle:
+    resource: "@MyComPlatformBundle/Resources/config/routing.yml"
+    prefix:   /
+
 MyComAdminBundle:
     resource: "@MyComAdminBundle/Resources/config/routing.yml"
     prefix:   /

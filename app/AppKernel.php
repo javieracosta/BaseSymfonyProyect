@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new MyCom\AdminBundle\MyComAdminBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new MyCom\PlatformBundle\MyComPlatformBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
