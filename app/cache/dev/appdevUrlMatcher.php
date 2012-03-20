@@ -26,10 +26,7 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
         $pathinfo = urldecode($pathinfo);
 
         // _welcome
-        if (rtrim($pathinfo, '/') === '') {
-            if (substr($pathinfo, -1) !== '/') {
-                return $this->redirect($pathinfo.'/', '_welcome');
-            }
+        if ($pathinfo === '/welcome') {
             return array (  '_controller' => 'Acme\\DemoBundle\\Controller\\WelcomeController::indexAction',  '_route' => '_welcome',);
         }
 
@@ -141,6 +138,14 @@ class appdevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
                 return array (  '_controller' => 'Sensio\\Bundle\\DistributionBundle\\Controller\\ConfiguratorController::finalAction',  '_route' => '_configurator_final',);
             }
 
+        }
+
+        // MyComPlatformBundle_homepage
+        if (rtrim($pathinfo, '/') === '') {
+            if (substr($pathinfo, -1) !== '/') {
+                return $this->redirect($pathinfo.'/', 'MyComPlatformBundle_homepage');
+            }
+            return array (  '_controller' => 'MyCom\\PlatformBundle\\Controller\\DefaultController::indexAction',  '_route' => 'MyComPlatformBundle_homepage',);
         }
 
         // MyComAdminBundle_homepage
