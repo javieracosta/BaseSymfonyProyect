@@ -66,8 +66,6 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: MyCom\PlatformBundle\Entity\User
-    template:
-        engine: php
     
     
 # app/config/config.yml
@@ -76,4 +74,3 @@ knp_menu:
         template: knp_menu.html.twig
     templating: true # if true, enables the helper for PHP templates
     default_renderer: twig # The renderer to use, list is also available by default
-    
