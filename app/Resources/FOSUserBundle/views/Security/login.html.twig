@@ -1,22 +1,62 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
-{% endif %}
+<div id="login_container">
+    <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+            <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+    </div>
 
-<form action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        {% for key, message in app.session.getFlashes() %}
+            <div class="{{ key }}">
+            {{ message|trans({}, 'FOSUserBundle') }}
+                </div>
+        {% endfor %}
+            </div>
+    {#IF ERROR#}
+    {% block fos_user_content_login_error %}
+        {% if error %}
+<div class="error"><div class="error_inner">{{ error|trans({}, 'FOSUserBundle') }}</div></div>
+        {% endif %}
+    {% endblock fos_user_content_login_error %}
+            
+{#FORM#}
 
-    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    {% block fos_user_content_login_form %}
+ {% if not is_granted("ROLE_USER") %}
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                <fieldset>
+                    <h1 id="logo"><a href="#">websitename Administration Panel</a></h1>
+                    <div class="formular">
+                        <div class="formular_inner">
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="password" id="password" name="_password" />
+                            <strong><label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label></strong>
+                            <span class="input_wrapper"><input type="text" id="username" name="_username" value="{{ last_username }}" /></span>
 
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>
-
-    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
-</form>
+                            <strong><label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label></strong>
+                            <span class="input_wrapper"><input type="password" id="password" name="_password" /></span>
+                            <label class="inline" for="remember_me">
+                                <input class="checkbox" type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                    {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
+                            </label>
+                            <ul class="form_menu">
+                                <li><span class="button"><span><span>Submit</span></span>
+                                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" />
+                                    </span>
+                                </li>
+                                <li><a href="#"><span><span>Back</span></span></a></li>
+                                <li><a href="#"><span><span>Forgot Pass</span></span></a></li>
+                            </ul>
+                        </div></div>
+                </fieldset> </form>
+  {% endif %}
+    {% endblock fos_user_content_login_form %}
+ 
 {% endblock fos_user_content %}
