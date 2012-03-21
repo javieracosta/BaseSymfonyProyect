@@ -1,8 +1,8 @@
 {% extends "FOSUserBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-<div id="login_container">
-    <div>
+
+    
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
             <a href="{{ path('fos_user_security_logout') }}">
@@ -11,14 +11,14 @@
             {% else %}
                 <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
             {% endif %}
-    </div>
+    
 
         {% for key, message in app.session.getFlashes() %}
             <div class="{{ key }}">
             {{ message|trans({}, 'FOSUserBundle') }}
                 </div>
         {% endfor %}
-            </div>
+            
     {#IF ERROR#}
     {% block fos_user_content_login_error %}
         {% if error %}
@@ -29,7 +29,7 @@
 {#FORM#}
 
     {% block fos_user_content_login_form %}
- {% if not is_granted("ROLE_USER") %}
+ 
             <form action="{{ path("fos_user_security_check") }}" method="post">
                 <fieldset>
                     <h1 id="logo"><a href="#">websitename Administration Panel</a></h1>
@@ -37,11 +37,14 @@
                         <div class="formular_inner">
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
 
-                            <strong><label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label></strong>
+                            <label for="username"><strong>{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</strong>
                             <span class="input_wrapper"><input type="text" id="username" name="_username" value="{{ last_username }}" /></span>
+                            </label>
+                            
 
-                            <strong><label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label></strong>
+                            <label for="password"><strong>{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</strong>
                             <span class="input_wrapper"><input type="password" id="password" name="_password" /></span>
+                            </label>
                             <label class="inline" for="remember_me">
                                 <input class="checkbox" type="checkbox" id="remember_me" name="_remember_me" value="on" />
                     {{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}
@@ -56,7 +59,7 @@
                             </ul>
                         </div></div>
                 </fieldset> </form>
-  {% endif %}
+ 
     {% endblock fos_user_content_login_form %}
  
 {% endblock fos_user_content %}
