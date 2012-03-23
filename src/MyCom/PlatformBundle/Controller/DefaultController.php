@@ -12,4 +12,9 @@ class DefaultController extends Controller
     {
         return $this->render('MyComPlatformBundle:Default:index.html.twig');
     }
+    
+    public function listAction()
+    {
+        return $this->render('MyComPlatformBundle:Default:list.html.twig');
+    }
 }

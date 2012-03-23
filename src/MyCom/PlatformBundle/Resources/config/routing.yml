@@ -3,5 +3,5 @@ MyComPlatformBundle_homepage:
     defaults: { _controller: MyComPlatformBundle:Default:index }
 
 MyComPlatformBundle_list:
-    pattern:  /
+    pattern:  /list
     defaults: { _controller: MyComPlatformBundle:Default:list }
