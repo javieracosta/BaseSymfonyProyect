@@ -1,6 +1,6 @@
 MyComPlatformBundle_homepage:
     pattern:  /
-    defaults: { _controller: MyComPlatformBundle:Default:index }
+    defaults: { _controller: MyComPlatformBundle:Default:home }
 
 MyComPlatformBundle_list:
     pattern:  /list
