@@ -1,7 +1,0 @@
-MyComPlatformBundle_homepage:
-    pattern:  /
-    defaults: { _controller: MyComPlatformBundle:Default:home }
-
-MyComPlatformBundle_list:
-    pattern:  /list
-    defaults: { _controller: MyComPlatformBundle:Default:list }
